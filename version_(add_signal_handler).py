@@ -12,28 +12,24 @@ import asyncio
 
 20         SIGTOP    停止（挂起）进程 CRTL+D
 """
-loop = asyncio.get_event_loop()
-exit_flag = asyncio.Event()
 
 
 def safely_exit():
-    exit_flag.set()
+    asyncio.create_task(safely_exit_management())
 
 
-# signal.signal(signal.SIGTERM, safely_exit)
-# signal.signal(signal.SIGINT, safely_exit)
+loop = asyncio.get_event_loop()
+
 loop.add_signal_handler(signal.SIGTERM, safely_exit)
 loop.add_signal_handler(signal.SIGINT, safely_exit)
 
 
 async def safely_exit_management():
-    await exit_flag.wait()
     print('Safely exit.')
     loop.stop()
 
 
 async def loop_task():
-    asyncio.create_task(safely_exit_management())
     while 1:
         print("ha")  # 任务主体
         await asyncio.sleep(2)
