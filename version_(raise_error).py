@@ -1,5 +1,6 @@
 import signal
 import asyncio
+import sys
 
 """
 信号值      符号      行为
@@ -16,7 +17,7 @@ loop = asyncio.get_event_loop()
 
 
 def safely_exit():
-    loop.close()
+    sys.exit(0)
 
 
 loop.add_signal_handler(signal.SIGTERM, safely_exit)
@@ -41,4 +42,4 @@ except:
     print('Loop detects a error')
 finally:
     loop.run_until_complete(safely_exit_management())
-# todo 还没有完成
+exit()
