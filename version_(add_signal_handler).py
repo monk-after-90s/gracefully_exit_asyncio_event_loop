@@ -41,3 +41,4 @@ try:
     loop.run_forever()
 finally:
     loop.close()
+exit()
